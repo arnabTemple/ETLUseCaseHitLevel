@@ -3,7 +3,6 @@ from SimplePipeline.FieldParsingUtils import *
 
 
 class ProcessHitLevelFile:
-    outputBasePath = "outputFiles"
     fileName = "SearchKeywordPerformance.tab"
 
     def __init__(self, in_file):
@@ -37,6 +36,6 @@ class ProcessHitLevelFile:
         else:
             self.df = grouped.sort_values(by="revenue", ascending=False)
 
-    def output(self):
-        file_name = get_output_file_nm(self.outputBasePath, self.fileName)
+    def output(self, output_base_path):
+        file_name = get_output_file_nm(output_base_path, self.fileName)
         self.df.to_csv(file_name, sep='\t', header=True, index=False)
