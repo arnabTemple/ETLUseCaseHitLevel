@@ -1,9 +1,9 @@
-from unittest import TestCase
+import unittest
 from SimplePipeline import FieldParsingUtils
 from datetime import date
 
 
-class Test(TestCase):
+class Test(unittest.TestCase):
     def test_get_search_engine_domain_from_referrer(self):
         referrer = 'http://www.google.com/search?hl=en&client=firefox-a&rls=org.mozilla%3Aen-US%3Aofficial&hs=ZzP&q=Ipod&aq=f&oq=&aqi='
         self.assertEqual(FieldParsingUtils.get_search_engine_domain_from_referrer(referrer), 'www.google.com')
