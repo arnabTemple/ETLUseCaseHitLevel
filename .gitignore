@@ -1,0 +1,16 @@
+/build/lib/SchemaManagement/__init__.py
+/build/lib/SimplePipeline/__init__.py
+/build/lib/test/__init__.py
+/ETLUseCaseHitLevel.egg-info/dependency_links.txt
+/dist/ETLUseCaseHitLevel-1.0.0-py3.8.egg
+/build/lib/SchemaManagement/Events.py
+/build/lib/SimplePipeline/FieldParsingUtils.py
+/build/lib/SchemaManagement/HitLevelRecord.py
+/build/lib/SchemaManagement/OutputRecord.py
+/ETLUseCaseHitLevel.egg-info/PKG-INFO
+/build/lib/SimplePipeline/ProcessHitLevelFile.py
+/build/lib/SchemaManagement/Product.py
+/ETLUseCaseHitLevel.egg-info/requires.txt
+/ETLUseCaseHitLevel.egg-info/SOURCES.txt
+/build/lib/test/test_FieldParsingUtils.py
+/ETLUseCaseHitLevel.egg-info/top_level.txt
