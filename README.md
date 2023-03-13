@@ -1,3 +1,3 @@
 # ETLUseCaseHitLevel
 
-![](C:\Users\arnab\Downloads\logos\architecture.png)
+![](C:\Users\arnab\PycharmProjects\ETLUseCaseHitLevel\architecture.png)
