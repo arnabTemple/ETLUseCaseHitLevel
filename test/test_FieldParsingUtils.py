@@ -42,3 +42,7 @@ class Test(unittest.TestCase):
         search_engine_domain = "www.esshopzilla.com"
         self.assertEqual(FieldParsingUtils.is_external_search_engine(search_engine_domain), False)
 
+
+if __name__ == '__main__':
+    unittest.main()
+    
