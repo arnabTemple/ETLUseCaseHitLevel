@@ -1,3 +1,3 @@
 # ETLUseCaseHitLevel
 
-![ScreenShot](architecture.png)
+![ScreenShot](architecture_flow.png)
