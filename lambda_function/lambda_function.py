@@ -12,11 +12,10 @@ def lambda_handler(event, context):
 
     print("Bucket = " + bucket)
     print("Key = " + key)
-
-    # Get the s3 object for processing
-    response = s3_client.get_object(Bucket=bucket, Key=key)
     print("File Path = s3://" + bucket + "/" + key)
 
+    # Get the s3 object for processing and sample print from file
+    response = s3_client.get_object(Bucket=bucket, Key=key)
     data = response['Body'].read().decode('utf-8')
     reader = csv.reader(io.StringIO(data), delimiter='\t')
     next(reader)
