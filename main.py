@@ -2,7 +2,7 @@ from SimplePipeline import ProcessHitLevelFile
 
 
 def main():
-    input_file = "resources/inputFiles/data_modified.tsv"
+    input_file = "resources/inputFiles/data.tsv"
     output_base_path = "resources/outputFiles"
     etl = ProcessHitLevelFile.ProcessHitLevelFile(input_file)
     etl.process()

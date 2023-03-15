@@ -21,14 +21,18 @@ class ProcessHitLevelFile:
         self.df = pd.read_csv(in_file, sep='\t', header=0, dtype=usecols).fillna('')
 
     def process(self):
-        self.df["hasPurchase"] = self.df["event_list"].apply(has_purchase_event)
-        filtered = self.df[(self.df["hasPurchase"])].copy()
-        filtered.loc[:, ["search_engine_domain"]] = filtered["referrer"].apply(get_search_engine_domain_from_referrer)
-        filtered.loc[:, "isExternalSearch"] = filtered["search_engine_domain"].apply(is_external_search_engine)
-        filtered1 = filtered[(filtered["isExternalSearch"])].copy()
-        filtered1.loc[:, "search_keyword"] = filtered1["referrer"].apply(get_search_keyword_from_referrer)
-        filtered1.loc[:, "revenue"] = filtered1["product_list"].apply(calculate_revenue_from_product_list)
-        grouped = filtered1.groupby(["search_engine_domain", "search_keyword"], as_index=False)["revenue"].sum()
+        df = self.df.copy()
+        df.loc[:, "hasPurchase"] = df["event_list"].apply(has_purchase_event)
+        df.loc[:, "isExternalSearch"] = df["referrer"].apply(is_external_search_engine)
+        filtered1 = df[(df["hasPurchase"])]
+        filtered_pur = filtered1[["ip", "product_list"]]
+        filtered2 = df[(df["isExternalSearch"])]
+        filtered_ext = filtered2[["ip", "referrer"]]
+        joined = filtered_pur.merge(filtered_ext, left_on='ip', right_on='ip', how="inner")
+        joined.loc[:, ["search_engine_domain"]] = joined["referrer"].apply(get_search_engine_domain_from_referrer)
+        joined.loc[:, ["search_keyword"]] = joined["referrer"].apply(get_search_keyword_from_referrer)
+        joined.loc[:, "revenue"] = joined["product_list"].apply(calculate_revenue_from_product_list)
+        grouped = joined.groupby(["search_engine_domain", "search_keyword"], as_index=False)["revenue"].sum()
         if grouped.empty:
             self.df = pd.DataFrame({'search_engine_domain': [],
                                     'search_keyword': [],

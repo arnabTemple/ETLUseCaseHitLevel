@@ -122,14 +122,15 @@ class ProcessHitLevelSpark:
                                       sep=separator).na.fill(value="")
 
     def process(self):
-        filtered = self.df.filter(udf_has_purchase_event(self.df.event_list.cast("string"))
-                                  & udf_is_external_search_engine(self.df.referrer))
-        projected = filtered.select(udf_get_search_engine_domain_from_referrer(filtered.referrer)
-                                    .alias("search_engine_domain"),
-                                    udf_get_search_keyword_from_referrer(filtered.referrer)
-                                    .alias("search_keyword"),
-                                    udf_calculate_revenue_from_product_list(filtered.product_list)
-                                    .alias("revenue"))
+        filtered_ext = self.df.filter(udf_is_external_search_engine(self.df.referrer))
+        filtered_pur = self.df.filter(udf_has_purchase_event(self.df.event_list.cast("string")))
+        joined = filtered_pur.alias("t1").join(filtered_ext.alias("t2"), "ip", 'inner')
+        projected = joined.select(udf_get_search_engine_domain_from_referrer(joined['t2.referrer'])
+                                  .alias("search_engine_domain"),
+                                  udf_get_search_keyword_from_referrer(joined['t2.referrer'])
+                                  .alias("search_keyword"),
+                                  udf_calculate_revenue_from_product_list(joined['t1.product_list'])
+                                  .alias("revenue"))
         self.processed = projected.groupby(['search_engine_domain', 'search_keyword']) \
             .agg(sum('revenue').alias("revenue"))
 
